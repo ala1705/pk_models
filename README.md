@@ -1,6 +1,9 @@
-# Pharmokinetics Model Solver
+# Pharmacokinetics Model Solver
 
 ## Overview
+
+Pharmacokinetics Model Solver is a library designed to specify, solve and 
+visualise the solution of a PK model. 
 
 ## Installation
 
