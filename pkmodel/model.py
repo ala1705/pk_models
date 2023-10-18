@@ -2,11 +2,12 @@
 # Model class
 #
 
+
 class Model:
     """A Pharmokinetic (PK) model
     This is the base class, which will always contain one central compartment and 0-2 periphery
     compartments. The `Intravenous` and `Subcutaneous` Models will inherit from this class, implementing
-    their own versions of the `add_compartments` and `add_equations` methods.
+    their own versions of the `add_compartments` and `solve_equations` methods.
 
 
     """
@@ -48,55 +49,29 @@ class Model:
         else:
             raise TypeError("Input rates and volumes must be floats")
 
-        self.compartments = self.add_compartments()
-        self.equations = self.add_equations()
+        self.compartments = {}
+        self.add_compartments()
 
-    def add_compartments(self) -> dict[str, Compartment]:
+    def add_compartments(self) -> None:
         """The general model will add a `Central` compartment and a number of `Periphery` compartments
-
-        :return: A dictionary keyed by the name of the `Compartment` containing each compartment
         """
-        compartments = {"Central": Central(self.V_c)}
+        self.compartments["Central"] = Central(self.V_c)
 
         for i in range(self.num_peripheries):
-            volume = self.V_p_list[i]
-            transition_rate = self.Q_p_list[i]
-            compartments["Periphery " + str(i + 1)] = Periphery(volume, transition_rate)
 
-        return compartments
+            # For each periphery, we get its inputted volume and transition_rate, and then create a new
+            # dictionary entry for each periphery
+            V_p_i = self.V_p_list[i]
+            Q_p_i = self.Q_p_list[i]
+            self.compartments["Peripheries"][i] = Periphery(V_p_i, Q_p_i)
 
-    def add_equations(self) -> dict[str, float]:
-        pass
+    def solve_equations(self) -> dict:
+        """Here we will solve the equations for the given model, but we don't wish for this to be ever called from this
+        base class, so raise a NotImplementedError if this method is called!
+        """
+        raise NotImplementedError("Cannot call `solve_equations` from Model base class, must do so from a subclass")
 
-
-class Intravenous(Model):
-    """This describes the Intravenous model implementation for the compartments and equations
-    """
-
-    def __init__(self, clearance_rate: float, dose_rate: float, V_c: float, num_peripheries: int, V_p_list: list[float],
-                 Q_p_list: list[float]):
-        super().__init__(clearance_rate, dose_rate, V_c, num_peripheries, V_p_list, Q_p_list)
-
-    def add_compartments(self) -> dict[str, Compartment]:
-        return super().add_compartments()
-
-
-class Subcutaneous(Model):
-    """This describes the Subcutaneous model implementation for the compartments and equations
-    """
-
-    def __init__(self, clearance_rate: float, dose_rate: float, V_c: float, num_peripheries: int, V_p_list: list[float],
-                 Q_p_list: list[float], V_d, absorption_rate: float):
-        super().__init__(clearance_rate, dose_rate, V_c, num_peripheries, V_p_list, Q_p_list)
-
-        if V_d is float and absorption_rate is float:
-            self.V_d = V_d
-            self.k_a = absorption_rate
-        else:
-            raise TypeError("Dose compartment volume and absorption rate must be floats")
-
-    def add_compartments(self) -> dict[str, Compartment]:
-        compartments = super().add_compartments()
-        compartments["Dose"] = Dose(self.V_d, self.k_a)
-        return compartments
-
+    def rhs(self, t, y):
+        """Again we leave the implementation to subclasses, so raise a NotImplementedError here
+        """
+        raise NotImplementedError("Cannot call `rhs` from Model base class, must do so from a subclass")
