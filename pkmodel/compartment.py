@@ -24,9 +24,9 @@ class Periphery(Compartment):
         super().__init__(volume, drug_quantity)
         self.transition_rate = transition_rate
 
-    def find_transition():
+    def find_transition(self, q_c, V_c):
 
-        pass
+        return self.transition_rate * ((q_c / V_c) - (self.drug_quantity / self.volume))
 
 
 
