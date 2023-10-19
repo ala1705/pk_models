@@ -11,8 +11,18 @@ class Intravenous(Model):
     """This describes the Intravenous model implementation for the compartments and equations
     """
 
-    def __init__(self, clearance_rate: float, dose_rate: float, V_c: float, num_peripheries: int, V_p_list: list[float],
-                 Q_p_list: list[float]):
+    def __init__(self, clearance_rate: float = 0.0, dose_rate: float = 0.0, V_c: float = 1.0,
+                 num_peripheries: int = 1, V_p_list: list[float] = None,
+                 Q_p_list: list[float] = None):
+        """
+
+        :param clearance_rate: Defaults to 0.0 (no clearance)
+        :param dose_rate: Defaults to 0.0 (no dosage)
+        :param V_c: Defaults to 1.0
+        :param num_peripheries: Defaults to 1
+        :param V_p_list: Defaults to None, but then this is handled by the base class
+        :param Q_p_list: Defaults to None, but then this is handled by the base class
+        """
         super().__init__(clearance_rate, dose_rate, V_c, num_peripheries, V_p_list, Q_p_list)
 
     def add_compartments(self) -> None:

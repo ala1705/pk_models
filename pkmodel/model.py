@@ -14,8 +14,10 @@ class Model:
 
 
     """
-    def __init__(self, clearance_rate: float, dose_rate: float,
-                 V_c: float, num_peripheries: int, V_p_list: list[float], Q_p_list: list[float]):
+
+    def __init__(self, clearance_rate: float = 0.0, dose_rate: float = 0.0,
+                 V_c: float = 1.0, num_peripheries: int = 1, V_p_list: list[float] = None,
+                 Q_p_list: list[float] = None):
         """
 
         :param clearance_rate: The constant clearance rate from the central compartment
@@ -50,6 +52,17 @@ class Model:
             raise TypeError("num_peripheries must be an int")
 
         # Checks for the periphery volumes and fluxes
+
+        # IMPORTANT: If the user has provided no values for V_p_list or Q_p_list, then we will
+        # initialise these lists with default values. The length of these lists will be
+        # num_peripheries
+        if V_p_list is None:
+            V_p_list = [1.0] * num_peripheries
+        if Q_p_list is None:
+            Q_p_list = [0.0] * num_peripheries
+
+        # Check that the length of lists are correct, that they are of the correct type and are
+        # within a valid range
         if len(V_p_list) == num_peripheries and len(Q_p_list) == num_peripheries:
 
             for i in range(num_peripheries):
@@ -81,7 +94,6 @@ class Model:
         self.compartments["Peripheries"] = []
 
         for i in range(self.num_peripheries):
-
             # For each periphery, we get its inputted volume and transition_rate, and then create a new
             # dictionary entry for each periphery
             V_p_i = self.V_p_list[i]
