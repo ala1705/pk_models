@@ -42,16 +42,16 @@ def plot(data):
     plt.ylabel('drug mass [ng]')
     plt.xlabel('time [h]')
 
-    plt.title("Drug Mass against Time within Drug Compartments for the "+model_name+" Model")
+    plt.title("Drug Quantity over Time: "+model_name+" Model")
 
-    plot_folder = "Plots Folder"
+    plot_folder = "plots"
 
     if not os.path.exists(plot_folder):
         os.makedirs(plot_folder)
 
     time_string = str(time.strftime("%H%M%S"))
 
-    destination = plot_folder+"/comparison_plot"+" "+time_string+".png"
+    destination = plot_folder+"/"+model_name.lower()+"+time_string+".png"
     plt.savefig(destination)
     plt.show()
 
