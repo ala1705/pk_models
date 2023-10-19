@@ -1,8 +1,6 @@
 """Plot graphs"""
 
 import matplotlib.pylab as plt
-import numpy as np
-import scipy.integrate
 import os
 import time
 
