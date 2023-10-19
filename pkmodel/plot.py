@@ -51,7 +51,8 @@ def plot(data):
 
     time_string = str(time.strftime("%H%M%S"))
 
-    plt.savefig(plot_folder/"comparison_plot"+" "+time_string+".png")
+    destination = plot_folder+"/comparison_plot"+" "+time_string+".png"
+    plt.savefig(destination)
     plt.show()
 
 
