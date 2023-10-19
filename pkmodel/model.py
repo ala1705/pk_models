@@ -1,6 +1,7 @@
 #
 # Model class
 #
+<<<<<<< Updated upstream
 import numpy as np
 
 from pkmodel.compartment import Central, Periphery
@@ -11,6 +12,59 @@ class Model:
     This is the base class, which will always contain one central compartment and 0-2 periphery
     compartments. The `Intravenous` and `Subcutaneous` Models will inherit from this class, implementing
     their own versions of the `add_compartments` and `solve_equations` methods.
+=======
+<<<<<<< Updated upstream
+
+class Model:
+    """A Pharmokinetic (PK) model
+=======
+import numpy as np
+
+from pkmodel.compartment import Central, Periphery
+
+class Model:
+    """A Pharmokinetic (PK) model
+    This is the base class, which will always contain one central compartment and 0-2 periphery
+    compartments. The `Intravenous` and `Subcutaneous` Models will inherit from this class, implementing
+    their own versions of the `add_compartments` and `solve_equations` methods.
+
+
+    """
+    def __init__(self, clearance_rate: float, dose_rate,
+                 V_c: float, num_peripheries: int, V_p_list: list[float], Q_p_list: list[float]):
+        """
+
+        :param clearance_rate: The constant clearance rate from the central compartment
+        :param V_c: The constant volume of the central compartment
+        :param num_peripheries: The number of periphery compartments (0-2 inclusive)
+        :param V_p_list: The list of volumes of the different periphery compartments
+        :param Q_p_list: The list of transition rates between the central compartment and each periphery
+        compartment
+
+        """
+
+        # Checks for the clearance_rate, dose_rate and central volume
+        if isinstance(clearance_rate, (float, int)) and isinstance(dose_rate, (float, int)) \
+                and isinstance(V_c, (float, int)):
+            if clearance_rate >= 0 and dose_rate >= 0 and V_c > 0:
+                self.CL = float(clearance_rate)
+                self.dose_rate = float(dose_rate)
+                self.V_c = float(V_c)
+            else:
+                raise ValueError("Fluxes cannot be negative and volumes must be positive")
+        else:
+            raise TypeError("Input fluxes and volumes must be floats")
+
+        # Checks for the number of peripheries
+        if isinstance(num_peripheries, int):
+            if 0 <= num_peripheries <= 2:
+                self.num_peripheries = num_peripheries
+            else:
+                raise ValueError("num_peripheries must lie between 0 and 2 inclusive")
+        else:
+            raise TypeError("num_peripheries must be an int")
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 
     """
