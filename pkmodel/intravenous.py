@@ -48,13 +48,16 @@ class Intravenous(Model):
         """
         # Here we set up the time steps, and we set all initial compartment drug amount to zero
         t_eval = np.linspace(0, 1, 1000)
-        y0 = np.array([0.0, 0.0])
+
+        # This contains initial data for all the peripheries
+        y0 = np.array([0.0] * (1 + self.num_peripheries))
 
         solution = scipy.integrate.solve_ivp(
             fun=lambda t, y: self.rhs_ode(t, y),
             t_span=[t_eval[0], t_eval[-1]],
             y0=y0, t_eval=t_eval
         )
+        print(len(solution.y))
 
         # This returns the solution as a dictionary containing the time steps and the
         # different drug amounts over time for each compartment

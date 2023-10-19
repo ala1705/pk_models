@@ -29,7 +29,7 @@ class Model:
         """
 
         # Checks for the clearance_rate, dose_rate and central volume
-        if clearance_rate is float and dose_rate is float and V_c is float:
+        if isinstance(clearance_rate, float) and isinstance(dose_rate, float) and isinstance(V_c, float):
             if clearance_rate >= 0 and dose_rate >= 0 and V_c > 0:
                 self.CL = clearance_rate
                 self.dose_rate = dose_rate
@@ -40,7 +40,7 @@ class Model:
             raise TypeError("Input fluxes and volumes must be floats")
 
         # Checks for the number of peripheries
-        if num_peripheries is int:
+        if isinstance(num_peripheries, int):
             if 0 <= num_peripheries <= 2:
                 self.num_peripheries = num_peripheries
             else:
@@ -49,23 +49,24 @@ class Model:
             raise TypeError("num_peripheries must be an int")
 
         # Checks for the periphery volumes and fluxes
-        if V_p_list is list[float] and Q_p_list is list[float]:
-            if len(V_p_list) == num_peripheries and len(Q_p_list) == num_peripheries:
+        if len(V_p_list) == num_peripheries and len(Q_p_list) == num_peripheries:
 
-                invalid_values = [vol for vol in V_p_list if vol <= 0] + [flux for flux in Q_p_list if flux < 0]
+            for i in range(num_peripheries):
+                if not isinstance(V_p_list[i], float) or not isinstance(Q_p_list[i], float):
+                    raise TypeError("Input rates and volumes must be floats")
 
-                # If there are no invalid values, then we can set the lists
-                if len(invalid_values) == 0:
-                    self.V_p_list = V_p_list
-                    self.Q_p_list = Q_p_list
-                else:
-                    raise ValueError("Fluxes cannot be negative and volumes must be positive")
+            invalid_values = [vol for vol in V_p_list if vol <= 0] + [flux for flux in Q_p_list if flux < 0]
 
+            # If there are no invalid values, then we can set the lists
+            if len(invalid_values) == 0:
+                self.V_p_list = V_p_list
+                self.Q_p_list = Q_p_list
             else:
-                raise ValueError("There must be exactly", self.num_peripheries,
-                                 "periphery volumes and fluxes each")
+                raise ValueError("Fluxes cannot be negative and volumes must be positive")
+
         else:
-            raise TypeError("Input rates and volumes must be floats")
+            raise ValueError("There must be exactly " + str(self.num_peripheries) +
+                             " periphery volumes and fluxes each")
 
         self.compartments = {}
         self.add_compartments()
@@ -74,6 +75,7 @@ class Model:
         """The general model will add a `Central` compartment and a number of `Periphery` compartments
         """
         self.compartments["Central"] = Central(self.V_c)
+        self.compartments["Peripheries"] = []
 
         for i in range(self.num_peripheries):
 
@@ -81,7 +83,7 @@ class Model:
             # dictionary entry for each periphery
             V_p_i = self.V_p_list[i]
             Q_p_i = self.Q_p_list[i]
-            self.compartments["Peripheries"][i] = Periphery(V_p_i, Q_p_i)
+            self.compartments["Peripheries"].append(Periphery(V_p_i, Q_p_i))
 
     def solve_equations(self) -> dict:
         """Here we will solve the equations for the given model, but we don't wish for this to be ever called from this

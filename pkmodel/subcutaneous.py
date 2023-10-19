@@ -19,10 +19,8 @@ class Subcutaneous(Model):
         :param absorption_rate: The rate at which the substance is absorbed from the 
         Dose compartment to the Central compartment
         """
-        super().__init__(clearance_rate, dose_rate, V_c, num_peripheries, V_p_list, Q_p_list)
-
         # Checks for the dose compartment
-        if V_0 is float and absorption_rate is float:
+        if isinstance(V_0, float) and isinstance(absorption_rate, float):
             if V_0 > 0 and absorption_rate >= 0:
                 self.V_0 = V_0
                 self.k_a = absorption_rate
@@ -30,6 +28,8 @@ class Subcutaneous(Model):
                 raise ValueError("Fluxes must be non-negative and volumes must be positive")
         else:
             raise TypeError("Dose compartment volume and absorption rate must be floats")
+
+        super().__init__(clearance_rate, dose_rate, V_c, num_peripheries, V_p_list, Q_p_list)
 
     def add_compartments(self) -> None:
 
@@ -70,7 +70,9 @@ class Subcutaneous(Model):
         """
         # Here we set up the time steps, and we set all initial compartment drug amount to zero
         t_eval = np.linspace(0, 1, 1000)
-        y0 = np.array([0.0, 0.0])
+
+        # This must contain initial data for all the peripheries
+        y0 = np.array([0.0] * (2 + self.num_peripheries))
 
         solution = scipy.integrate.solve_ivp(
             fun=lambda t, y: self.rhs_ode(t, y),

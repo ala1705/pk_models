@@ -4,9 +4,8 @@ import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
 
+
 def plot(data):
-
-
     t = data["t"]
     q_c = data["Central"]
     plt.plot(t, q_c, label="q_c")
@@ -20,12 +19,10 @@ def plot(data):
             plt.plot(t, p, label="q_p"+str(i))
             i += 1
 
-
     if "Dose" in data:
 
         q_d = data["Dose"]
         plt.plot(t, q_d, label="q_d")
-
 
     plt.legend()
     plt.ylabel('drug mass [ng]')
