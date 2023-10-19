@@ -20,7 +20,7 @@ class Subcutaneous(Model):
         Dose compartment to the Central compartment
         """
         # Checks for the dose compartment
-        if isinstance(V_0, float) and isinstance(absorption_rate, float):
+        if isinstance(V_0, (float, int)) and isinstance(absorption_rate, (float, int)):
             if V_0 > 0 and absorption_rate >= 0:
                 self.V_0 = V_0
                 self.k_a = absorption_rate
