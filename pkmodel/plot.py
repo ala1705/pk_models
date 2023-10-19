@@ -3,6 +3,8 @@
 import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
+import os
+import time
 
 
 def plot(data):
@@ -42,7 +44,14 @@ def plot(data):
 
     plt.title("Drug Mass against Time within Drug Compartments for the "+model_name+" Model")
 
-    plt.savefig("comparison_plot.png")
+    plot_folder = "Plots Folder"
+
+    if not os.path.exists(plot_folder):
+        os.makedirs(plot_folder)
+
+    time_string = str(time.strftime("%H%M%S"))
+
+    plt.savefig(plot_folder/"comparison_plot"+" "+time_string+".png")
     plt.show()
 
 
