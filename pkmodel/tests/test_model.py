@@ -72,3 +72,34 @@ def test_ints_get_changed_to_floats(test):
     """
     mod = pk.Model(*test)
     assert all(isinstance(val, float) for val in [mod.CL, mod.dose_rate, mod.V_c, *mod.V_p_list, *mod.Q_p_list])
+
+
+@pytest.mark.parametrize(
+    "test",
+    [
+        (),
+        ([1]),
+        (1, 1),
+        (1, 1, 1, 0),
+        (1, 1, 1, 2),
+        (1, 1, 1, 2, [1, 1])
+    ]
+)
+def test_default_values(test):
+    """Test if the default values are properly processed
+    """
+    pk.Model(*test)
+
+
+def test_default_values_with_named_arguments():
+    """Test if the default values work well with named arguments
+    """
+    pk.Model(num_peripheries=2)
+
+
+def test_default_values_raise_errors():
+    """Test if an error is raised if some provided values are incompatible with the defaults.
+    The default number of compartments is 0 so an empty list of parameters is going to be incompatible
+    """
+    with pytest.raises(ValueError):
+        pk.Model(V_p_list=[])
