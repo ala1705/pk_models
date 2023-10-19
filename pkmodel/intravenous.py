@@ -19,7 +19,27 @@ class Intravenous(Model):
         super().add_compartments()
 
     def rhs_ode(self, t: np.array, y: list[np.array]):
+        """This method returns a list of right-hand sides for the ODEs defined in the intravenous
+        model. This will include one central compartment equation and some periphery equations
+
+        :param t: A numpy array of time steps for the problem
+        :param y: A list of numpy arrays for each compartment. The first element is the Central data
+        and the rest of the elements are Periphery compartments
+        :return:
+        """
         q_c, q_p_list = y[0], y[1:]
+
+        # This is adapting prototype.py to make a list of transitions for each periphery compartment
+        # instead of just one transition, using a list comprehension
+        transition_list = [self.Q_p_list[i] * (q_c / self.V_c - q_p_list[i] / self.V_p_list[i])
+                           for i in range(len(q_p_list))]
+
+        # The central compartment ODE
+        dqc_dt = self.dose_rate - q_c / self.V_c * self.CL - sum(transition_list)
+
+        # A list of periphery compartment ODEs
+        dqp_dt_list = transition_list
+        return [dqc_dt] + dqp_dt_list
 
     def solve_equations(self) -> dict:
         """Here we use the Intravenous ODE model to solve the problem

@@ -3,6 +3,8 @@
 #
 import numpy as np
 
+from pkmodel.compartment import Central, Periphery
+
 
 class Model:
     """A Pharmokinetic (PK) model
