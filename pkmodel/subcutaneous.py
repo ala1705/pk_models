@@ -19,9 +19,13 @@ class Subcutaneous(Model):
         """
         super().__init__(clearance_rate, dose_rate, V_c, num_peripheries, V_p_list, Q_p_list)
 
+        # Checks for the dose compartment
         if V_d is float and absorption_rate is float:
-            self.V_d = V_d
-            self.k_a = absorption_rate
+            if V_d > 0 and absorption_rate >= 0:
+                self.V_d = V_d
+                self.k_a = absorption_rate
+            else:
+                raise ValueError("Fluxes must be non-negative and volumes must be positive")
         else:
             raise TypeError("Dose compartment volume and absorption rate must be floats")
 

@@ -18,6 +18,9 @@ class Intravenous(Model):
     def add_compartments(self) -> None:
         super().add_compartments()
 
+    def rhs_ode(self, t: np.array, y: list[np.array]):
+        q_c, q_p_list = y[0], y[1:]
+
     def solve_equations(self) -> dict:
         """Here we use the Intravenous ODE model to solve the problem
 
@@ -28,7 +31,7 @@ class Intravenous(Model):
         y0 = np.array([0.0, 0.0])
 
         solution = scipy.integrate.solve_ivp(
-            fun=lambda t, y: self.rhs(t, y),
+            fun=lambda t, y: self.rhs_ode(t, y),
             t_span=[t_eval[0], t_eval[-1]],
             y0=y0, t_eval=t_eval
         )

@@ -1,6 +1,7 @@
 #
 # Model class
 #
+import numpy as np
 
 
 class Model:
@@ -24,13 +25,19 @@ class Model:
         compartment
 
         """
+
+        # Checks for the clearance_rate, dose_rate and central volume
         if clearance_rate is float and dose_rate is float and V_c is float:
-            self.CL = clearance_rate
-            self.dose_rate = dose_rate
-            self.V_c = V_c
+            if clearance_rate >= 0 and dose_rate >= 0 and V_c > 0:
+                self.CL = clearance_rate
+                self.dose_rate = dose_rate
+                self.V_c = V_c
+            else:
+                raise ValueError("Fluxes cannot be negative and volumes must be positive")
         else:
             raise TypeError("Input fluxes and volumes must be floats")
 
+        # Checks for the number of peripheries
         if num_peripheries is int:
             if 0 <= num_peripheries <= 2:
                 self.num_peripheries = num_peripheries
@@ -39,10 +46,19 @@ class Model:
         else:
             raise TypeError("num_peripheries must be an int")
 
+        # Checks for the periphery volumes and fluxes
         if V_p_list is list[float] and Q_p_list is list[float]:
             if len(V_p_list) == num_peripheries and len(Q_p_list) == num_peripheries:
-                self.V_p_list = V_p_list
-                self.Q_p_list = Q_p_list
+
+                invalid_values = [vol for vol in V_p_list if vol <= 0] + [flux for flux in Q_p_list if flux < 0]
+
+                # If there are no invalid values, then we can set the lists
+                if len(invalid_values) == 0:
+                    self.V_p_list = V_p_list
+                    self.Q_p_list = Q_p_list
+                else:
+                    raise ValueError("Fluxes cannot be negative and volumes must be positive")
+
             else:
                 raise ValueError("There must be exactly", self.num_peripheries,
                                  "periphery volumes and fluxes each")
@@ -71,7 +87,7 @@ class Model:
         """
         raise NotImplementedError("Cannot call `solve_equations` from Model base class, must do so from a subclass")
 
-    def rhs(self, t, y):
-        """Again we leave the implementation to subclasses, so raise a NotImplementedError here
+    def rhs_ode(self, t: np.array, y: list[np.array]):
+        """We leave the implementation to subclasses, so raise a NotImplementedError here
         """
         raise NotImplementedError("Cannot call `rhs` from Model base class, must do so from a subclass")
