@@ -15,7 +15,6 @@ def plot(data):
         data (dict): dictionary storing all plot data
     """
 
-
     t = data["t"]
     
     q_c = data["Central"]
@@ -54,6 +53,3 @@ def plot(data):
     destination = plot_folder+"/comparison_plot"+" "+time_string+".png"
     plt.savefig(destination)
     plt.show()
-
-
-

@@ -57,4 +57,3 @@ class Dose(Compartment):
         """
         super().__init__(volume)
         self.absorption_rate = absorption_rate
-
