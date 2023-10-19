@@ -133,3 +133,6 @@ dmypy.json
 
 # IntelliJ files
 .idea/
+
+# Plots
+./pkmodel/plot_images/
