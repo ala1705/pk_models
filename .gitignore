@@ -135,4 +135,4 @@ dmypy.json
 .idea/
 
 # Plots
-./pkmodel/plot_images/
+./pkmodel/plots/
