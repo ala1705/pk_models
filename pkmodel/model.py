@@ -32,9 +32,9 @@ class Model:
         if isinstance(clearance_rate, (float, int)) and isinstance(dose_rate, (float, int)) \
                 and isinstance(V_c, (float, int)):
             if clearance_rate >= 0 and dose_rate >= 0 and V_c > 0:
-                self.CL = clearance_rate
-                self.dose_rate = dose_rate
-                self.V_c = V_c
+                self.CL = float(clearance_rate)
+                self.dose_rate = float(dose_rate)
+                self.V_c = float(V_c)
             else:
                 raise ValueError("Fluxes cannot be negative and volumes must be positive")
         else:
@@ -55,6 +55,8 @@ class Model:
             for i in range(num_peripheries):
                 if not isinstance(V_p_list[i], (float, int)) or not isinstance(Q_p_list[i], (float, int)):
                     raise TypeError("Input rates and volumes must be floats")
+                else:
+                    V_p_list[i], Q_p_list[i] = float(V_p_list[i]), float(Q_p_list[i])
 
             invalid_values = [vol for vol in V_p_list if vol <= 0] + [flux for flux in Q_p_list if flux < 0]
 
