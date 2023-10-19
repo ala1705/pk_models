@@ -1,18 +1,17 @@
 """Plot graphs"""
 
 import matplotlib.pylab as plt
-import numpy as np
-import scipy.integrate
 import os
 import time
 
 
-def plot(data):
+def plot(data: dict, title: str = None):
 
     """function to plot model outcome and save plots
 
     Args:
         data (dict): dictionary storing all plot data
+        title (str): optional title for the output png doc
     """
 
     t = data["t"]
@@ -29,27 +28,28 @@ def plot(data):
             plt.plot(t, p, label="Peripheral "+str(i))
             i += 1
 
-    model_name = "Intravenous"
+    model_type = "Intravenous"
 
     if "Dose" in data:
 
         q_d = data["Dose"]
         plt.plot(t, q_d, label="Dose")
-        model_name = "Subcutaneous"
+        model_type = "Subcutaneous"
 
     plt.legend()
     plt.ylabel('drug mass [ng]')
     plt.xlabel('time [h]')
 
-    plt.title("Drug Quantity over Time: "+model_name+" Model")
+    plt.title("Drug Quantity over Time: "+model_type+" Model")
 
     plot_folder = "plots"
 
     if not os.path.exists(plot_folder):
         os.makedirs(plot_folder)
 
-    time_string = str(time.strftime("%H%M%S"))
+    if title is None:
+        title = str(time.strftime("%H%M%S"))
 
-    destination = plot_folder+"/"+model_name.lower()+time_string+".png"
+    destination = plot_folder + "/" + model_type.lower() + "_" + title + ".png"
     plt.savefig(destination)
     plt.show()
