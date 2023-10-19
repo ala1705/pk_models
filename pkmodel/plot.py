@@ -4,23 +4,28 @@ import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
 
-def plot():
+def plot(data):
 
-    t_eval = np.linspace(0, 1, 1000)
-    y0 = np.array([0.0, 0.0])
 
-    fig = plt.figure()
-    for model in [model1_args, model2_args]:
-        args = [
-            model['Q_p1'], model['V_c'], model['V_p1'], model['CL'], model['X']
-        ]
-        sol = scipy.integrate.solve_ivp(
-            fun=lambda t, y: rhs(t, y, *args),
-            t_span=[t_eval[0], t_eval[-1]],
-            y0=y0, t_eval=t_eval
-        )
-        plt.plot(sol.t, sol.y[0, :], label=model['name'] + '- q_c')
-        plt.plot(sol.t, sol.y[1, :], label=model['name'] + '- q_p1')
+    t = data["t"]
+    q_c = data["Central"]
+    plt.plot(t, q_c, label="q_c")
+
+    if "Peripheries" in data:
+
+        q_p = data["Peripheries"]
+
+        i = 1
+        for p in q_p:
+            plt.plot(t, p, label="q_p"+str(i))
+            i += 1
+
+
+    if "Dose" in data:
+
+        q_d = data["Dose"]
+        plt.plot(t, q_d, label="q_d")
+
 
     plt.legend()
     plt.ylabel('drug mass [ng]')
