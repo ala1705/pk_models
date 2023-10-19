@@ -131,5 +131,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# generated plots
-pkmodel/plots
+# IntelliJ files
+.idea/
+
+# Plots
+./pkmodel/plots/
