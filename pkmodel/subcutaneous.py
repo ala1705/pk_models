@@ -12,9 +12,9 @@ class Subcutaneous(Model):
     """This describes the Subcutaneous model implementation for the compartments and equations
     """
 
-    def __init__(self, clearance_rate: float = 0.0, dose_rate: float = 0.0, V_c: float = 1.0,
+    def __init__(self, clearance_rate: float = 1.0, dose_rate: float = 1.0, V_c: float = 1.0,
                  num_peripheries: int = 1, V_p_list: list[float] = None, Q_p_list: list[float] = None,
-                 V_0: float = 1.0, absorption_rate: float = 0.0):
+                 V_0: float = 1.0, absorption_rate: float = 1.0):
         """
         :param V_0: The volume of the Dose compartment
         :param absorption_rate: The rate at which the substance is absorbed from the 

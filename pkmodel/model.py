@@ -15,7 +15,7 @@ class Model:
 
     """
 
-    def __init__(self, clearance_rate: float = 0.0, dose_rate: float = 0.0,
+    def __init__(self, clearance_rate: float = 1.0, dose_rate: float = 1.0,
                  V_c: float = 1.0, num_peripheries: int = 1, V_p_list: list[float] = None,
                  Q_p_list: list[float] = None):
         """
@@ -59,7 +59,7 @@ class Model:
         if V_p_list is None:
             V_p_list = [1.0] * num_peripheries
         if Q_p_list is None:
-            Q_p_list = [0.0] * num_peripheries
+            Q_p_list = [1.0] * num_peripheries
 
         # Check that the length of lists are correct, that they are of the correct type and are
         # within a valid range
