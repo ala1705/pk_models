@@ -29,7 +29,8 @@ class Model:
         """
 
         # Checks for the clearance_rate, dose_rate and central volume
-        if isinstance(clearance_rate, float) and isinstance(dose_rate, float) and isinstance(V_c, float):
+        if isinstance(clearance_rate, (float, int)) and isinstance(dose_rate, (float, int)) \
+                and isinstance(V_c, (float, int)):
             if clearance_rate >= 0 and dose_rate >= 0 and V_c > 0:
                 self.CL = clearance_rate
                 self.dose_rate = dose_rate
@@ -52,7 +53,7 @@ class Model:
         if len(V_p_list) == num_peripheries and len(Q_p_list) == num_peripheries:
 
             for i in range(num_peripheries):
-                if not isinstance(V_p_list[i], float) or not isinstance(Q_p_list[i], float):
+                if not isinstance(V_p_list[i], (float, int)) or not isinstance(Q_p_list[i], (float, int)):
                     raise TypeError("Input rates and volumes must be floats")
 
             invalid_values = [vol for vol in V_p_list if vol <= 0] + [flux for flux in Q_p_list if flux < 0]
