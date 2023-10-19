@@ -22,8 +22,8 @@ class Subcutaneous(Model):
         # Checks for the dose compartment
         if isinstance(V_0, (float, int)) and isinstance(absorption_rate, (float, int)):
             if V_0 > 0 and absorption_rate >= 0:
-                self.V_0 = V_0
-                self.k_a = absorption_rate
+                self.V_0 = float(V_0)
+                self.k_a = float(absorption_rate)
             else:
                 raise ValueError("Fluxes must be non-negative and volumes must be positive")
         else:
