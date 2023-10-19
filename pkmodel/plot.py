@@ -15,7 +15,7 @@ def plot(data: dict, title: str = None):
     """
 
     t = data["t"]
-    
+
     q_c = data["Central"]
     plt.plot(t, q_c, label="Central")
 
@@ -25,7 +25,7 @@ def plot(data: dict, title: str = None):
 
         i = 1
         for p in q_p:
-            plt.plot(t, p, label="Peripheral "+str(i))
+            plt.plot(t, p, label="Peripheral " + str(i))
             i += 1
 
     model_type = "Intravenous"

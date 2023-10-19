@@ -3,7 +3,6 @@ import numpy as np
 import scipy
 
 
-
 def dose(t, X):
     return X
 

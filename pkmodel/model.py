@@ -81,8 +81,7 @@ class Model:
                 raise ValueError("Fluxes cannot be negative and volumes must be positive")
 
         else:
-            raise ValueError("There must be exactly " + str(self.num_peripheries) +
-                             " periphery volumes and fluxes each")
+            raise ValueError("There must be exactly " + str(self.num_peripheries) + "periphery volumes and fluxes each")
 
         self.compartments = {}
         self.add_compartments()

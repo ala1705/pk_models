@@ -26,7 +26,7 @@ class Central(Compartment):
         """
 
         super().__init__(volume)
-        
+
 
 class Periphery(Compartment):
     """Class representing a periphery drug compartment
@@ -43,11 +43,11 @@ class Periphery(Compartment):
         super().__init__(volume)
         self.transition_rate = transition_rate
 
-    
+
 class Dose(Compartment):
     """Class representing the dose compartment
     """
-    
+
     def __init__(self, volume, absorption_rate):
         """Initialise dose compartment class
 
