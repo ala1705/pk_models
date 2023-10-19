@@ -51,7 +51,8 @@ setup(
 
     maintainer='Matthew Ghosh, Abbie Evans, Tom Reed, Ala Maksymiuk',
 
-    maintainer_email='matthew.ghosh@gtc.ox.ac.uk, abbie.evans@keble.ox.ac.uk, thomas.reed@wolfson.ox.ac.uk, alicja.maksymiuk@new.ox.ac.uk',
+    maintainer_email='matthew.ghosh@gtc.ox.ac.uk, abbie.evans@keble.ox.ac.uk, ' \
+    + 'thomas.reed@wolfson.ox.ac.uk, alicja.maksymiuk@new.ox.ac.uk',
 
     url='https://github.com/ala1705/pk_models.git',
 
@@ -75,8 +76,8 @@ setup(
         'dev': [
             # Flake8 for code style checking
             'flake8>=3',
-	    'pytest',
-	    'pytest-cov',
+            'pytest',
+            'pytest-cov',
         ],
     },
 )
