@@ -39,7 +39,7 @@ setup(
     # Version
     version=get_version(),
 
-    description='An example Python project.',
+    description='Pharmokinetics Modelling Project.',
 
     long_description=get_readme(),
 
@@ -49,11 +49,12 @@ setup(
 
     # author_email='',
 
-    maintainer='Martin Robinson',
+    maintainer='Matthew Ghosh, Abbie Evans, Tom Reed, Ala Maksymiuk',
 
-    maintainer_email='martin.robinson@cs.ox.ac.uk',
+    maintainer_email='matthew.ghosh@gtc.ox.ac.uk, abbie.evans@keble.ox.ac.uk, ' \
+    + 'thomas.reed@wolfson.ox.ac.uk, alicja.maksymiuk@new.ox.ac.uk',
 
-    url='https://github.com/SABS-R3/2020-software-engineering-projects-pk',
+    url='https://github.com/ala1705/pk_models.git',
 
     # Packages to include
     packages=find_packages(include=('pkmodel', 'pkmodel.*')),
@@ -75,6 +76,8 @@ setup(
         'dev': [
             # Flake8 for code style checking
             'flake8>=3',
+            'pytest',
+            'pytest-cov',
         ],
     },
 )
