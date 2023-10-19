@@ -28,16 +28,19 @@ def plot(data):
             plt.plot(t, p, label="Peripheral "+str(i))
             i += 1
 
+    model_name = "Intravenous"
+
     if "Dose" in data:
 
         q_d = data["Dose"]
         plt.plot(t, q_d, label="Dose")
+        model_name = "Subcutaneous"
 
     plt.legend()
     plt.ylabel('drug mass [ng]')
     plt.xlabel('time [h]')
 
-    plt.title("Drug Mass against Time within Drug Compartments")
+    plt.title("Drug Mass against Time within Drug Compartments for the "+model_name+" Model")
 
     plt.savefig("comparison_plot.png")
     plt.show()
