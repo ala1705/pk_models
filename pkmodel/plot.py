@@ -51,7 +51,7 @@ def plot(data):
 
     time_string = str(time.strftime("%H%M%S"))
 
-    destination = plot_folder+"/"+model_name.lower()+"+time_string+".png"
+    destination = plot_folder+"/"+model_name.lower()+time_string+".png"
     plt.savefig(destination)
     plt.show()
 
