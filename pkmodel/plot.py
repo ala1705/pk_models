@@ -40,7 +40,7 @@ def plot(data: dict, title: str = None):
     plt.ylabel('drug mass [ng]')
     plt.xlabel('time [h]')
 
-    plt.title("Drug Quantity over Time: "+model_type+" Model")
+    plt.title("Drug Quantity over Time: " + model_type + " Model")
 
     plot_folder = "plots"
 
