@@ -40,7 +40,8 @@ plot(results_subcutaneous_4, "zero_clearance")
 
 # Change run-time and number of time-steps
 intravenous_model_5 = Intravenous(clearance_rate=0, dose_per_time_step=1, Q_p_list=[2.0], run_time=10.0)
-subcutaneous_model_5 = Subcutaneous(clearance_rate=0, dose_per_time_step=1, Q_p_list=[2.0], absorption_rate=1.0, time_step_length=20)
+subcutaneous_model_5 = Subcutaneous(clearance_rate=0, dose_per_time_step=1, Q_p_list=[2.0],
+                                    absorption_rate=1.0, time_step_length=20)
 
 results_intravenous_5 = intravenous_model_5.solve_equations()
 results_subcutaneous_5 = subcutaneous_model_5.solve_equations()
