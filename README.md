@@ -91,11 +91,6 @@ The length (s) of an individual time-step
 
 ### Dosing function
 
-The dosing function consists of three parameters:
-* X: The amount of the drug administered [ng]
-* dose: The length of the time period for which the drug is administered
-* no_dose: The length of the time period between doses
-
 If dose = 0, then there is an instantaneous dose at the beginning, and no more of the drug will be administered.
 
 If dose = 1, no_dose = 0, there will be a continuous dose of amount X administered over the time period.
