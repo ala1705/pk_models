@@ -18,9 +18,9 @@ To make sure all dependencies are installed, in the current directory run:
 ## Quick run
 Move to the pk_models directory. In the command line, run
 
-	python simulation.py
+	python simulation.py -m Intravenous
 
-This will run the simulation with pre-set parameter values.
+This will run the simulation with pre-set parameter values. The model type must be specified! Here, the model is Intravenous, but this could be replaced with Subcutaneous.
 
 In order to change these parameter values, you will need to use commands within pk_models (see below)
 
