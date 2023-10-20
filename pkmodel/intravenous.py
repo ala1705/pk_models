@@ -11,19 +11,20 @@ class Intravenous(Model):
     """This describes the Intravenous model implementation for the compartments and equations
     """
 
-    def __init__(self, clearance_rate: float = 1.0, dose_rate: float = 1.0, V_c: float = 1.0,
+    def __init__(self, clearance_rate: float = 1.0, dose_per_time_step: float = 1.0, dose_on: int = 0,
+                 dose_off: int = 0, V_c: float = 1.0,
                  num_peripheries: int = 1, V_p_list: list[float] = None,
-                 Q_p_list: list[float] = None):
+                 Q_p_list: list[float] = None, run_time: float = 1.0, time_step_length: float = 1.0):
         """
 
-        :param clearance_rate: Defaults to 0.0 (no clearance)
-        :param dose_rate: Defaults to 0.0 (no dosage)
+        :param clearance_rate: Defaults to 1.0
         :param V_c: Defaults to 1.0
         :param num_peripheries: Defaults to 1
         :param V_p_list: Defaults to None, but then this is handled by the base class
         :param Q_p_list: Defaults to None, but then this is handled by the base class
         """
-        super().__init__(clearance_rate, dose_rate, V_c, num_peripheries, V_p_list, Q_p_list)
+        super().__init__(clearance_rate, dose_per_time_step, dose_on, dose_off, V_c, num_peripheries, V_p_list,
+                         Q_p_list, run_time, time_step_length)
 
     def add_compartments(self) -> None:
         super().add_compartments()
@@ -38,6 +39,7 @@ class Intravenous(Model):
         :return:
         """
         q_c, q_p_list = y[0], y[1:]
+        X = self.X
 
         # This is adapting prototype.py to make a list of transitions for each periphery compartment
         # instead of just one transition, using a list comprehension
@@ -45,7 +47,7 @@ class Intravenous(Model):
                            for i in range(len(q_p_list))]
 
         # The central compartment ODE
-        dqc_dt = self.dose_rate - q_c / self.V_c * self.CL - sum(transition_list)
+        dqc_dt = self.dosing(t, X) - q_c / self.V_c * self.CL - sum(transition_list)
 
         # A list of periphery compartment ODEs
         dqp_dt_list = transition_list
@@ -57,7 +59,8 @@ class Intravenous(Model):
         :return: A dictionary of numpy arrays containing the amount of drug in each compartment for each time step
         """
         # Here we set up the time steps, and we set all initial compartment drug amount to zero
-        t_eval = np.linspace(0, 1, 1000)
+        num_time_steps = int(self.run_time * 3600 / self.time_step_length)
+        t_eval = np.linspace(0, self.run_time, num_time_steps)
 
         # This contains initial data for all the peripheries
         y0 = np.array([0.0] * (1 + self.num_peripheries))
@@ -67,7 +70,6 @@ class Intravenous(Model):
             t_span=[t_eval[0], t_eval[-1]],
             y0=y0, t_eval=t_eval
         )
-        print(len(solution.y))
 
         # This returns the solution as a dictionary containing the time steps and the
         # different drug amounts over time for each compartment
