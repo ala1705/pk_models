@@ -38,15 +38,16 @@ A comprehensive list of the commands is provided below:
 |`--dose-rate=1.0`|`-d`|Dose amount per time step [ng per time step]|
 |`--dose-on=0`|`-s`|Number of time steps per cycle when the drug is administered. If both the dose_on and dose_off is set to 0, the drug is administered only once, immediately.|
 |`--dose-off=0`|`-e`|Number of time steps per cycle when the drug is not administered.|
-|`--Vcentral=1`|`-v`|Volume of the central compartment [mL]|
+|`--V-central=1`|`-v`|Volume of the central compartment [mL]|
 |`--n-peripheries=1`|`-n`|Number of peripheral compartments (0-2)|
-|`--Vperipheries="[1.0]"`|`-V`|List of volumes of peripheral compartments [mL]|
-|`--Qperipheries="[1.0]"`|`-Q`|List of flux rates between the central and peripheral compartments [mL/h]|
+|`--V-peripheries="[1.0]"`|`-V`|List of volumes of peripheral compartments [mL]|
+|`--Q-peripheries="[1.0]"`|`-Q`|List of flux rates between the central and peripheral compartments [mL/h]|
 |`--drug-volume=1.0`|`-D`|Volume of the subcutaneous compartment where the drug is administered [mL] - only applicable to the Subcutaneous model type|
 |`--drug-absorption=1.0`|`-a`|Flux rate between the drug and central compartment [mL/h] - only applicable to the Subcutaneous model type|
 |`--run-time=1.0`|`-r`|Length of the runtime [h]|
 |`--time-step=1.0`|`-t`|Length of the time step [s]|
 |`--plot-folder="/plots"`|`-f`|Destination of the plot files|
+|`--title=""`|`-T`|Title attached to the output .png file|
 
 
 ## Parameter Definitions
@@ -97,4 +98,26 @@ If dose = 1, no_dose = 0, there will be a continuous dose of amount X administer
 
 If dose > 0 and no_dose > 0, then the dose function switches between a continuous dose applied for the time period dose specifies
 and no dose applied for the time period no_dose specifies.
+
+
+
+## Biological Meaning: Pharmokinetic Modelling
+The information provided is sourced from the [oxrse website](https://train.oxrse.uk/event/5/1960).
+
+The field of Pharmacokinetics (PK) provides a quantitative basis for describing the delivery of a drug to a patient, the diffusion of that drug through the plasma/body tissue, and the subsequent clearance of the drug from the patient's system. PK is used to ensure that there is sufficient concentration of the drug to maintain the required efficacy of the drug, while ensuring that the concentration levels remain below the toxic threshold (See Fig 1). Pharmacokinetic (PK) models are often combined with Pharmacodynamic (PD) models, which model the positive effects of the drug, such as the binding of a drug to the biological target, and/or undesirable side effects, to form a full PKPD model of the drug-body interaction. This project will only focus on PK, neglecting the interaction with a PD model.
+
+PK enables the following processes to be quantified:
+
+* Absorption
+* Distribution
+* Metabolism
+* Excretion
+
+
+
+
+
+
+
+
 
