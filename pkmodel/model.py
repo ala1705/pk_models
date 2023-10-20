@@ -15,7 +15,8 @@ class Model:
     """
     def __init__(self, clearance_rate: float = 1.0, X: float = 1.0, dose: int = 0, 
                  no_dose: int = 0, V_c: float = 1.0, num_peripheries: int = 1, 
-                 V_p_list: list[float] = None, Q_p_list: list[float] = None):
+                 V_p_list: list[float] = None, Q_p_list: list[float] = None, 
+                 run_time: float = 1.0, num_timesteps: int = 1000):
         """
 
         :param clearance_rate: The constant clearance rate from the central compartment
@@ -30,6 +31,8 @@ class Model:
         :param V_p_list: The list of volumes of the different periphery compartments
         :param Q_p_list: The list of transition rates between the central compartment and 
         each periphery compartment
+        :param run_time: The simulated time that the model runs for
+        :param num_timesteps: The number of time-steps sympy will use to solve diff eqns
 
         """
 
@@ -97,9 +100,27 @@ class Model:
             raise ValueError("There must be exactly " + str(self.num_peripheries) +
                              " periphery volumes and fluxes each")
 
+        # Checks for the run-time
+        if isinstance(run_time, (float, int)):
+            if run_time > 0:
+                self.run_time = run_time
+            else:
+                raise ValueError("run_time must be greater than 0")
+        else:
+            raise TypeError("run_time must be a float")
+
+        # Checks for the number of timesteps
+        if isinstance(num_timesteps, int):
+            if num_timesteps > 0:
+                self.num_timesteps = num_timesteps
+            else:
+                raise ValueError("num_timesteps must be greater or equal to 1")
+        else:
+            raise TypeError("num_timsteps must be an int")
+
         self.compartments = {}
         self.add_compartments()
-        self.sub_div = 1000
+        self.sub_div = self.num_timesteps
 
     def add_compartments(self) -> None:
         """The general model will add a `Central` compartment and a number of `Periphery` compartments

@@ -14,7 +14,7 @@ class Intravenous(Model):
     def __init__(self, clearance_rate: float = 1.0, X: float = 1.0, dose: int = 0,
                  no_dose: int = 0, V_c: float = 1.0,
                  num_peripheries: int = 1, V_p_list: list[float] = None,
-                 Q_p_list: list[float] = None):
+                 Q_p_list: list[float] = None, run_time: float = 1.0, num_timesteps: int = 1000):
         """
 
         :param clearance_rate: Defaults to 1.0
@@ -23,7 +23,7 @@ class Intravenous(Model):
         :param V_p_list: Defaults to None, but then this is handled by the base class
         :param Q_p_list: Defaults to None, but then this is handled by the base class
         """
-        super().__init__(clearance_rate, X, dose, no_dose, V_c, num_peripheries, V_p_list, Q_p_list)
+        super().__init__(clearance_rate, X, dose, no_dose, V_c, num_peripheries, V_p_list, Q_p_list, run_time, num_timesteps)
 
     def add_compartments(self) -> None:
         super().add_compartments()
@@ -58,7 +58,7 @@ class Intravenous(Model):
         :return: A dictionary of numpy arrays containing the amount of drug in each compartment for each time step
         """
         # Here we set up the time steps, and we set all initial compartment drug amount to zero
-        t_eval = np.linspace(0, 1, 1000)
+        t_eval = np.linspace(0, self.run_time, self.num_timesteps)
 
         # This contains initial data for all the peripheries
         y0 = np.array([0.0] * (1 + self.num_peripheries))

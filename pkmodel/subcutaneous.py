@@ -15,7 +15,8 @@ class Subcutaneous(Model):
     def __init__(self, clearance_rate: float = 1.0, X: float = 1.0, dose: int = 0,
                  no_dose: int = 0, V_c: float = 1.0, num_peripheries: int = 1, 
                  V_p_list: list[float] = None, Q_p_list: list[float] = None,
-                 V_0: float = 1.0, absorption_rate: float = 1.0):
+                 V_0: float = 1.0, absorption_rate: float = 1.0, 
+                 run_time: float = 1.0, num_timesteps: int = 1000):
         """
         :param V_0: The volume of the Dose compartment
         :param absorption_rate: The rate at which the substance is absorbed from the
@@ -31,7 +32,7 @@ class Subcutaneous(Model):
         else:
             raise TypeError("Dose compartment volume and absorption rate must be floats")
 
-        super().__init__(clearance_rate, X, dose, no_dose, V_c, num_peripheries, V_p_list, Q_p_list)
+        super().__init__(clearance_rate, X, dose, no_dose, V_c, num_peripheries, V_p_list, Q_p_list, run_time, num_timesteps)
 
     def add_compartments(self) -> None:
 
@@ -72,7 +73,7 @@ class Subcutaneous(Model):
         :return: A dictionary of numpy arrays containing the amount of drug in each compartment for each time step
         """
         # Here we set up the time steps, and we set all initial compartment drug amount to zero
-        t_eval = np.linspace(0, 1, 1000)
+        t_eval = np.linspace(0, self.run_time, self.num_timesteps)
 
         # This must contain initial data for all the peripheries
         y0 = np.array([0.0] * (2 + self.num_peripheries))
