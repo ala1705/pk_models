@@ -45,11 +45,11 @@ class Periphery(Compartment):
 
 
 class Dose(Compartment):
-    """Class representing the dose compartment
+    """Class representing the dose_on compartment
     """
 
     def __init__(self, volume, absorption_rate):
-        """Initialise dose compartment class
+        """Initialise dose_on compartment class
 
         Args:
             volume (float): volume of compartment [mL]
