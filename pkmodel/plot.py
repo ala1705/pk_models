@@ -5,7 +5,7 @@ import os
 import time
 
 
-def plot(data: dict, plot_folder: str = "/plots", title: str = None):
+def plot(data: dict, plot_folder: str = "/plots", title: str = ""):
 
     """function to plot model outcome and save plots
 
@@ -46,7 +46,7 @@ def plot(data: dict, plot_folder: str = "/plots", title: str = None):
     if not os.path.exists(plot_folder):
         os.makedirs(plot_folder)
 
-    if title is None:
+    if title == "":
         title = str(time.strftime("%H%M%S"))
 
     destination = plot_folder + "/" + model_type.lower() + "_" + title + ".png"

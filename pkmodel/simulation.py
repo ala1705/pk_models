@@ -150,4 +150,4 @@ for name, value in options:
     run_model(model_type=m, clearance=CL, dose_rate=dose, dose_on=dose_on, dose_off=dose_off,
               V_central=Vc, n_peripheries=N, V_peripheries=Vp, Q_peripheries=Qp,
               drug_volume=V0, drug_absorption=absorption, run_time=run_time, time_step=t,
-              plot_folder=plot, title=title)
+              plot_folder=dirname + "/" + plot, title=title)
