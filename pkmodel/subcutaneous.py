@@ -12,8 +12,9 @@ class Subcutaneous(Model):
     """This describes the Subcutaneous model implementation for the compartments and equations
     """
 
-    def __init__(self, clearance_rate: float = 1.0, dose_rate: float = 1.0, V_c: float = 1.0,
-                 num_peripheries: int = 1, V_p_list: list[float] = None, Q_p_list: list[float] = None,
+    def __init__(self, clearance_rate: float = 1.0, X: float = 1.0, dose: int = 0,
+                 no_dose: int = 0, V_c: float = 1.0, num_peripheries: int = 1, 
+                 V_p_list: list[float] = None, Q_p_list: list[float] = None,
                  V_0: float = 1.0, absorption_rate: float = 1.0):
         """
         :param V_0: The volume of the Dose compartment
@@ -30,7 +31,7 @@ class Subcutaneous(Model):
         else:
             raise TypeError("Dose compartment volume and absorption rate must be floats")
 
-        super().__init__(clearance_rate, dose_rate, V_c, num_peripheries, V_p_list, Q_p_list)
+        super().__init__(clearance_rate, X, dose, no_dose, V_c, num_peripheries, V_p_list, Q_p_list)
 
     def add_compartments(self) -> None:
 
@@ -48,6 +49,7 @@ class Subcutaneous(Model):
         :return:
         """
         q_0, q_c, q_p_list = y[0], y[1], y[2:]
+        X = self.X
 
         # This is adapting prototype.py to make a list of transitions for each periphery compartment
         # instead of just one transition, using a list comprehension
@@ -55,7 +57,7 @@ class Subcutaneous(Model):
                            for i in range(len(q_p_list))]
 
         # The dose compartment ODE
-        dq0_dt = self.dose_rate - self.k_a * q_0
+        dq0_dt = self.dosing(t, X) - self.k_a * q_0
 
         # The central compartment ODE
         dqc_dt = self.k_a * q_0 - q_c / self.V_c * self.CL - sum(transition_list)
