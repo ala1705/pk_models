@@ -1,0 +1,18 @@
+python simulation.py -m {"Intravenous"|"Subcutaneous"} [--help] [--clearance=1.0] [--dose-rate=1.0] [--dose-on=0] [--dose-off=0] [--Vcentral=1] [--n-peripheries=1] [--Vperipheries="[1.0]"] [--Qperipheries="[1.0]"] [--drug-volume=1.0] [--drug-absorption=1.0] [--run-time=1.0] [--time-step=1.0] [--plot-folder="/plots"]
+
+--help		    		-h	    Print help
+--model-type        	-m	    Model type {Intravenous|Subcutaneous}
+--clearance=1.0			-c	    Clearance
+--dose-rate=1.0			-d	    Dose amount per time step (ng per time step)
+--dose-on=0		    	-s	    Number of time steps per cycle when the drug is administered. If both the dose_on and dose_off is set to 0, the drug is administered only once, immediately.
+--dose-off=0			-e	    Number of time steps per cycle when the drug is not administered.
+--Vcentral=1			-v	    Volume of the central compartment (mL)
+--n-peripheries=1		-n	    Number of peripheral compartments (0-2)
+--Vperipheries="[1.0]"	-V	    List of volumes of peripheral compartments (mL)
+--Qperipheries="[1.0]"	-Q	    List of flux rates between the central and peripheral compartments (mL/h)
+--drug-volume=1.0		-D	    Volume of the subcutaneous compartment where the drug is administered (mL) - only applicable to the Subcutaneous model type
+--drug-absorption=1.0	-a	    Flux rate between the drug and central compartment (mL/h) - only applicable to the Subcutaneous model type
+--run-time=1.0			-r	    Length of the runtime (h)
+--time-step=1.0			-t	    Length of the time step (s)
+--plot-folder="/plots"	-f	    Destination of the plot files
+	
