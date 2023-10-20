@@ -27,6 +27,29 @@ This will run the simulation with pre-set parameter values.
 In order to change the parameter values, ............................................................
 
 
+
+## Parameter definitions
+
+### clearance_rate
+
+### X
+
+### dose
+
+### no_dose
+
+### V_c
+
+### num_peripheries
+
+### V_p_list
+
+### Q_p_list
+
+### run_time
+
+### num_timesteps
+
 ## Usage
 
 ### Dosing function
