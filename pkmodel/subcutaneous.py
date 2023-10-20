@@ -18,8 +18,8 @@ class Subcutaneous(Model):
                  V_0: float = 1.0, absorption_rate: float = 1.0,
                  run_time: float = 1.0, time_step_length: float = 1.0):
         """
-        :param V_0: The volume of the Dose compartment
-        :param absorption_rate: The rate at which the substance is absorbed from the
+        :param V_0: The volume (mL) of the Dose compartment
+        :param absorption_rate: The rate (/h) at which the substance is absorbed from the
         Dose compartment to the Central compartment
         """
         # Checks for the dose_on compartment

@@ -12,7 +12,7 @@ plot(results_intravenous_1, "standard_two_peripheries")
 plot(results_subcutaneous_1, "standard_two_peripheries")
 
 # Default values
-intravenous_model_2 = Intravenous()
+intravenous_model_2 = Intravenous(clearance_rate=0, num_peripheries=0, time_step_length=60)
 subcutaneous_model_2 = Subcutaneous()
 
 results_intravenous_2 = intravenous_model_2.solve_equations()

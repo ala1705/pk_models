@@ -20,20 +20,20 @@ class Model:
                  run_time: float = 1.0, time_step_length: float = 1.0):
         """
 
-        :param clearance_rate: The constant clearance rate from the central compartment
+        :param clearance_rate: The constant clearance rate (mL/h) from the central compartment
         :param dose_per_time_step: The rate of dosage (ng/time_step) into the central compartment
         :param dose_on: The number of time-steps the drug is administered at a time (if dose_on = 0,
         there is single dose_on at time 0)
         If dose_off = 0, the dose_on can be 0 (instantaneous dose_on) or 1 (continuous dose_on)
         :param dose_off: The number of time-steps for which drug is not
         administered at a time
-        :param V_c: The constant volume of the central compartment
+        :param V_c: The constant volume (mL) of the central compartment
         :param num_peripheries: The number of periphery compartments (0-2 inclusive)
-        :param V_p_list: The list of volumes of the different periphery compartments
-        :param Q_p_list: The list of transition rates between the central compartment and 
+        :param V_p_list: The list of volumes (mL) of the different periphery compartments
+        :param Q_p_list: The list of transition rates (mL/h) between the central compartment and
         each periphery compartment
-        :param run_time: The simulated time (in hours) that the model runs for
-        :param time_step_length: The length (in seconds) of an individual time-step
+        :param run_time: The simulated time (h) that the model runs for
+        :param time_step_length: The length (s) of an individual time-step
 
         """
 
@@ -152,7 +152,7 @@ class Model:
         :param X: The magnitude of dosage in ng
         """
         if self.dose_on == 0:
-            return int(3600 / self.time_step_length) * (X * (t == 0))
+            return int(10000000000000 / self.time_step_length) * (X * (t == 0))
         else:
             num_time_steps = int(self.run_time * 3600 / self.time_step_length)
             return X * ((num_time_steps - 1) * t % (self.dose_on
