@@ -50,14 +50,14 @@ class Model:
             raise TypeError("Input fluxes and volumes must be floats")
 
         # Checks for the time periods of dosage
-        if int(dose_on) >= 0:
-            self.dose_on = int(dose_on)
+        if isinstance(dose_on, int) and isinstance(dose_off, int):
+            if 0 <= dose_on and 0 <= dose_off:
+                self.dose_on = dose_on
+                self.dose_off = dose_off
+            else:
+                raise ValueError("Dosage points must be non-negative")
         else:
-            raise ValueError("Dosage points must be non-negative")
-        if int(dose_off) >= 0:
-            self.dose_off = int(dose_off)
-        else:
-            raise ValueError("Time periods to stop dosing must be non-negative")
+            raise TypeError("dose_on and dose_off must be ints")
 
         # Checks for the number of peripheries
         if isinstance(num_peripheries, int):
@@ -104,7 +104,7 @@ class Model:
         # Checks for the run-time
         if isinstance(run_time, (float, int)):
             if run_time > 0:
-                self.run_time = run_time
+                self.run_time = float(run_time)
             else:
                 raise ValueError("run_time must be greater than 0")
         else:
@@ -113,7 +113,7 @@ class Model:
         # Checks for time_step_length
         if isinstance(time_step_length, (float, int)):
             if 0 < time_step_length <= 60:
-                self.time_step_length = time_step_length
+                self.time_step_length = float(time_step_length)
             else:
                 raise ValueError("time_step_length must be positive and no longer than a minute")
         else:

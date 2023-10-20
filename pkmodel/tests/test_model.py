@@ -51,7 +51,7 @@ def test_reject_input_with_type_error(test):
         (0.1, 0.1, 1, 1, 0.1, 3, [0.1], [0.2], 1, 1),
         (0.1, 0.1, 1, 1, 0.1, 3, [0.1, 0.1, 0.1], [0.2, 0.2, 0.2], 1, 1),
         (0.1, 0.1, 1, 1, 0.1, 1, [0.1, 0.1], [0.2], 1, 1),
-        (0.1, 0.1, 1.0, 0, 0.1, 1, [0.1], [0.2], 1.0, 1.0),
+        (0.1, 0.1, -1, 1, 0.1, 1, [0.1], [0.2], 1.0, 1.0),
         (0.1, 0.1, 1, -1, 0.1, 1, [0.1], [0.2], 1.0, 1.0),
         (0.1, 0.1, 1, 0, 0.1, 1, [0.1], [0.2], 1.0, 61),
         (0.1, 0.1, 1, 0, 0.1, 1, [0.1], [0.2], 1.0, -1),
@@ -76,8 +76,7 @@ def test_ints_get_changed_to_floats(test):
     """Test if the integer values specified by the user are converted into floats
     """
     mod = pk.Model(*test)
-    assert all(isinstance(val, float) for val in [mod.CL, mod.X, mod.dose_on, mod.dose_off,
-                                                  mod.V_c, *mod.V_p_list, *mod.Q_p_list,
+    assert all(isinstance(val, float) for val in [mod.CL, mod.X, mod.V_c, *mod.V_p_list, *mod.Q_p_list,
                                                   mod.run_time, mod.time_step_length])
 
 
@@ -89,7 +88,7 @@ def test_ints_get_changed_to_floats(test):
         (1, 1),
         (1, 1, 1, 0),
         (1, 1, 1, 2),
-        (1, 1, 1, 2, [1, 1])
+        (1, 1, 1, 2, 3, 2, [1, 1])
     ]
 )
 def test_default_values(test):
