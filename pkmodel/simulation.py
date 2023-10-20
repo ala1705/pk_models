@@ -1,6 +1,7 @@
 import getopt
 import sys
 import os
+import re
 from pkmodel.model import Model
 
 
@@ -18,9 +19,8 @@ run_time = 1.0
 t = 1.0
 plot = "/plots"
 
-
 dirname = os.path.dirname(os.path.realpath(__file__))
-
+listregex = r"^\[-?\d+(?:\.\d+)?(?:,\s*-?\d+(?:\.\d+)?)*\]$"
 
 argv = sys.argv[1:]
 try:
@@ -100,9 +100,17 @@ for name, value in options:
             print("Error: number of peripheries value should be Int")
             sys.exit()
     elif name in ['-V', '--Vperipheries']:
-        Vp = value
+        if bool(re.search(listregex, value)):
+            Vp = eval(value)
+        else:
+            print("Error: expected a list of Floats or Ints for compartment volumes")
+            sys.exit()
     elif name in ['-Q', '--Qperipheries']:
-        Qp = value
+        if bool(re.search(listregex, value)):
+            Qp = eval(value)
+        else:
+            print("Error: expected a list of Floats or Ints for flux rates")
+            sys.exit()
     elif name in ['-D', '--drug-volume']:
         try:
             V0 = float(value)
@@ -130,5 +138,3 @@ for name, value in options:
     elif name in ['-f', '--plot-folder']:
         plot = value
 
-
-print(N + CL)
