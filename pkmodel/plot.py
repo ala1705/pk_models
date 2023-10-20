@@ -5,12 +5,13 @@ import os
 import time
 
 
-def plot(data: dict, title: str = None):
+def plot(data: dict, plot_folder: str = "/plots", title: str = ""):
 
     """function to plot model outcome and save plots
 
     Args:
         data (dict): dictionary storing all plot data
+        plot_folder (str): location for plots
         title (str): optional title for the output png doc
     """
 
@@ -42,12 +43,10 @@ def plot(data: dict, title: str = None):
 
     plt.title("Drug Quantity over Time: " + model_type + " Model")
 
-    plot_folder = "plots"
-
     if not os.path.exists(plot_folder):
         os.makedirs(plot_folder)
 
-    if title is None:
+    if title == "":
         title = str(time.strftime("%H%M%S"))
 
     destination = plot_folder + "/" + model_type.lower() + "_" + title + ".png"

@@ -15,6 +15,10 @@ ignore=
     # It's absolutely fine to have i and I
     E741,
 
+    # Do not use bare 'except'
+    # We want to catch all the errors
+    E722,
+
     # List comprehension redefines variable
     # Re-using throw-away variables like `i`, `x`, etc. is a Good Idea
     F812,

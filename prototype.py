@@ -21,7 +21,7 @@ model1_args = {
     'V_c': 1.0,
     'V_p1': 1.0,
     'CL': 1.0,
-    'X': 1.0,
+    'dose_per_time_step': 1.0,
 }
 
 model2_args = {
@@ -30,7 +30,7 @@ model2_args = {
     'V_c': 1.0,
     'V_p1': 1.0,
     'CL': 1.0,
-    'X': 1.0,
+    'dose_per_time_step': 1.0,
 }
 
 t_eval = np.linspace(0, 1, 1000)
@@ -39,7 +39,7 @@ y0 = np.array([0.0, 0.0])
 fig = plt.figure()
 for model in [model1_args, model2_args]:
     args = [
-        model['Q_p1'], model['V_c'], model['V_p1'], model['CL'], model['X']
+        model['Q_p1'], model['V_c'], model['V_p1'], model['CL'], model['dose_per_time_step']
     ]
     sol = scipy.integrate.solve_ivp(
         fun=lambda t, y: rhs(t, y, *args),
