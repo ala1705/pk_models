@@ -25,6 +25,7 @@ dirname = os.path.dirname(os.path.realpath(__file__))
 list_regex = r"^\[-?\d+(?:\.\d+)?(?:,\s*-?\d+(?:\.\d+)?)*\]$"
 
 argv = sys.argv[1:]
+print(argv)
 try:
     options, args = getopt.getopt(argv, "hm:c:d:s:e:v:n:V:Q:D:a:r:t:f:T:",
                                   [
@@ -51,18 +52,18 @@ except:
 if len(options) == 0:
     print("Error: incorrect arguments provided. Use '--help' option for help.")
     sys.exit()
+
 names = list(zip(*options))[0]
-print(names)
 if not ('-m' in names or '--model-type' in names or "-h" in names or "--help" in names):
     print("Error: model type has to be specified. Available options: "
           + "'Intravenous', 'Subcutaneous'. Choose '--help' option for help")
     sys.exit()
 
 for name, value in options:
+    print(name)
     if name in ['-h', '--help']:
         with open(dirname + "/docs.txt", "r") as file:
             text = file.read()
-        print(text)
         sys.exit()
     elif name in ['-m', '--model-type']:
         if value in ["Intravenous", "Subcutaneous"]:
@@ -102,6 +103,7 @@ for name, value in options:
             sys.exit()
     elif name in ['-n', '--n-peripheries']:
         try:
+            print("V", value)
             N = int(value)
         except:
             print("Error: number of peripheries value should be Int")
@@ -113,6 +115,7 @@ for name, value in options:
             print("Error: expected a list of Floats or Ints for compartment volumes")
             sys.exit()
     elif name in ['-Q', '--Q-peripheries']:
+        print("Hi there")
         if bool(re.search(list_regex, value)):
             Qp = eval(value)
         else:
