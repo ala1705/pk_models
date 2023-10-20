@@ -14,6 +14,42 @@ To make sure all dependencies are installed, in the current directory run:
 
 	pip install ./pk_models
 
+
+## Quick run
+Move to the pk_models directory. In the command line, run
+
+	python simulation.py
+
+This will run the simulation with pre-set parameter values.
+
+
+## Setting up the simulation
+In order to change the parameter values, ............................................................
+
+
+
+## Parameter definitions
+
+### clearance_rate
+
+### X
+
+### dose
+
+### no_dose
+
+### V_c
+
+### num_peripheries
+
+### V_p_list
+
+### Q_p_list
+
+### run_time
+
+### num_timesteps
+
 ## Usage
 
 ### Dosing function
@@ -29,3 +65,4 @@ If dose = 1, no_dose = 0, there will be a continuous dose of amount X administer
 
 If dose > 0 and no_dose > 0, then the dose function switches between a continuous dose applied for the time period dose specifies
 and no dose applied for the time period no_dose specifies.
+
