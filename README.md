@@ -32,7 +32,7 @@ A comprehensive list of the commands is provided below:
 
 |Command|Command Shortcut|Description|
 | --- | --- | --- |
-|'--help'|'-h'|Print help|
+| '--help' | '-h' |Print help|
 |'--model-type'|'-m'|Model type {Intravenous,Subcutaneous}|
 |'--clearance=1.0'|'-c'|Clearance|
 |'--dose-rate=1.0'|'-d'|Dose amount per time step [ng per time step]|
