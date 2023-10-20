@@ -98,8 +98,8 @@ class Model:
                 raise ValueError("Fluxes cannot be negative and volumes must be positive")
 
         else:
-            raise ValueError("There must be exactly " + str(self.num_peripheries) +
-                             " periphery volumes and fluxes each")
+            raise ValueError("There must be exactly " + str(self.num_peripheries)
+                             + " periphery volumes and fluxes each")
 
         # Checks for the run-time
         if isinstance(run_time, (float, int)):
