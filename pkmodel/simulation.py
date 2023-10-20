@@ -2,7 +2,6 @@ import getopt
 import sys
 import os
 import re
-from pkmodel.model import Model
 from pkmodel.main import run_model
 
 
