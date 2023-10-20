@@ -4,6 +4,7 @@
 import numpy as np
 from pkmodel.compartment import Central, Periphery
 
+
 class Model:
     """A Pharmokinetic (PK) model
     This is the base class, which will always contain one central compartment and 0-2 periphery
@@ -45,11 +46,11 @@ class Model:
             raise TypeError("Input fluxes and volumes must be floats")
 
         # Checks for the time periods of dosage
-        if (int(dose) >= 0):
+        if int(dose) >= 0:
             self.dose = int(dose)
         else:
             raise ValueError("Dosage points must be non-negative")
-        if (int(no_dose) >= 0):
+        if int(no_dose) >= 0:
             self.no_dose = int(no_dose)
         else:
             raise ValueError("Time periods to stop dosing must be non-negative")
@@ -93,11 +94,12 @@ class Model:
                 raise ValueError("Fluxes cannot be negative and volumes must be positive")
 
         else:
-            raise ValueError("There must be exactly " + str(self.num_peripheries) + " periphery volumes and fluxes each")
+            raise ValueError("There must be exactly " + str(self.num_peripheries) +
+                             " periphery volumes and fluxes each")
 
         self.compartments = {}
         self.add_compartments()
-        self.subdiv = 1000
+        self.sub_div = 1000
 
     def add_compartments(self) -> None:
         """The general model will add a `Central` compartment and a number of `Periphery` compartments
@@ -123,12 +125,13 @@ class Model:
         """
         raise NotImplementedError("Cannot call `rhs` from Model base class, must do so from a subclass")
 
-    def dosing(self, t, X):
+    def dosing(self, t: np.array, X: float) -> np.array:
         """Here we solve for the dosing function to find the rate for the magnitude of dosage
         :param t: The time frame
+        :param X: The magnitude of dosage in ng
         """
         if self.dose == 0:
             return X * (t == 0)
         else:
-            return X * ((self.subdiv - 1) * t % (self.dose
-                        + self.no_dose) < self.dose)
+            return X * ((self.sub_div - 1) * t % (self.dose
+                                                  + self.no_dose) < self.dose)

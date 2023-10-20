@@ -17,8 +17,7 @@ class Intravenous(Model):
                  Q_p_list: list[float] = None):
         """
 
-        :param clearance_rate: Defaults to 0.0 (no clearance)
-        :param dose_rate: Defaults to 0.0 (no dosage)
+        :param clearance_rate: Defaults to 1.0
         :param V_c: Defaults to 1.0
         :param num_peripheries: Defaults to 1
         :param V_p_list: Defaults to None, but then this is handled by the base class
@@ -69,7 +68,6 @@ class Intravenous(Model):
             t_span=[t_eval[0], t_eval[-1]],
             y0=y0, t_eval=t_eval
         )
-        print(len(solution.y))
 
         # This returns the solution as a dictionary containing the time steps and the
         # different drug amounts over time for each compartment
