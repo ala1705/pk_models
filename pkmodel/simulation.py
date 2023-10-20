@@ -25,7 +25,6 @@ dirname = os.path.dirname(os.path.realpath(__file__))
 list_regex = r"^\[-?\d+(?:\.\d+)?(?:,\s*-?\d+(?:\.\d+)?)*\]$"
 
 argv = sys.argv[1:]
-print(argv)
 try:
     options, args = getopt.getopt(argv, "hm:c:d:s:e:v:n:V:Q:D:a:r:t:f:T:",
                                   [
@@ -60,7 +59,6 @@ if not ('-m' in names or '--model-type' in names or "-h" in names or "--help" in
     sys.exit()
 
 for name, value in options:
-    print(name)
     if name in ['-h', '--help']:
         with open(dirname + "/docs.txt", "r") as file:
             text = file.read()
@@ -115,7 +113,6 @@ for name, value in options:
             print("Error: expected a list of Floats or Ints for compartment volumes")
             sys.exit()
     elif name in ['-Q', '--Q-peripheries']:
-        print("Hi there")
         if bool(re.search(list_regex, value)):
             Qp = eval(value)
         else:
