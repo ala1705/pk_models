@@ -49,31 +49,43 @@ A comprehensive list of the commands is provided below:
 |--plot-folder="/plots"|-f|Destination of the plot files|
 
 
+## Parameter Definitions
+
+### clearance_rate: 
+The constant clearance rate (mL/h) from the central compartment
+
+### dose_per_time_step: 
+The rate of dosage (ng/time_step) into the central compartment
+
+### dose_on: 
+The number of time-steps the drug is administered at a time (if dose_on = 0,there is single dose_on at time 0) If dose_off = 0, the dose_on can be 0 (instantaneous dose_on) or 1 (continuous dose_on)
+
+### dose_off: 
+The number of time-steps for which drug is not administered at a time
+
+### V_c: 
+The constant volume (mL) of the central compartment
+
+### num_peripheries: 
+The number of periphery compartments (0-2 inclusive)
+
+### V_p_list: 
+The list of volumes (mL) of the different periphery compartments
+
+### Q_p_list: 
+The list of transition rates (mL/h) between the central compartment and each periphery compartment
+
+### run_time: 
+The simulated time (h) that the model runs for
+
+### time_step_length: 
+The length (s) of an individual time-step
 
 
 
 
-## Parameter definitions
 
-### clearance_rate
 
-### X
-
-### dose
-
-### no_dose
-
-### V_c
-
-### num_peripheries
-
-### V_p_list
-
-### Q_p_list
-
-### run_time
-
-### num_timesteps
 
 ## Usage
 
