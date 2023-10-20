@@ -3,6 +3,7 @@ import sys
 import os
 import re
 from pkmodel.model import Model
+from pkmodel.main import run_model
 
 
 CL = 1.0
@@ -18,34 +19,40 @@ absorption = 1.0
 run_time = 1.0
 t = 1.0
 plot = "/plots"
+title = ""
 
 dirname = os.path.dirname(os.path.realpath(__file__))
-listregex = r"^\[-?\d+(?:\.\d+)?(?:,\s*-?\d+(?:\.\d+)?)*\]$"
+list_regex = r"^\[-?\d+(?:\.\d+)?(?:,\s*-?\d+(?:\.\d+)?)*\]$"
 
 argv = sys.argv[1:]
 try:
-    options, args = getopt.getopt(argv, "hm:c:d:s:e:v:n:V:Q:D:a:r:t:f:",
+    options, args = getopt.getopt(argv, "hm:c:d:s:e:v:n:V:Q:D:a:r:t:f:T:",
                                   [
                                       "help",
-                                      "model-type =",
-                                      "clearance =",
-                                      "dose-rate =",
-                                      "dose-on =",
-                                      "dose-off =",
-                                      "Vcentral =",
-                                      "n-peripheries =",
-                                      "Vperipheries =",
-                                      "Qperipheries =",
-                                      "drug-volume =",
-                                      "drug-absorption =",
-                                      "run-time =",
-                                      "time-step =",
-                                      "plot-folder =",
+                                      "model-type=",
+                                      "clearance=",
+                                      "dose-rate=",
+                                      "dose-on=",
+                                      "dose-off=",
+                                      "V-central=",
+                                      "n-peripheries=",
+                                      "V-peripheries=",
+                                      "Q-peripheries=",
+                                      "drug-volume=",
+                                      "drug-absorption=",
+                                      "run-time=",
+                                      "time-step=",
+                                      "plot-folder=",
+                                      "title=",
                                   ])
 except:
     print("Error: incorrect arguments provided. Use '--help' option for help.")
     sys.exit()
+if len(options) == 0:
+    print("Error: incorrect arguments provided. Use '--help' option for help.")
+    sys.exit()
 names = list(zip(*options))[0]
+print(names)
 if not ('-m' in names or '--model-type' in names or "-h" in names or "--help" in names):
     print("Error: model type has to be specified. Available options: "
           + "'Intravenous', 'Subcutaneous'. Choose '--help' option for help")
@@ -87,7 +94,7 @@ for name, value in options:
         except:
             print("Error: dose off value should be Int")
             sys.exit()
-    elif name in ['-v', '--Vcentral']:
+    elif name in ['-v', '--V-central']:
         try:
             Vc = float(value)
         except:
@@ -99,14 +106,14 @@ for name, value in options:
         except:
             print("Error: number of peripheries value should be Int")
             sys.exit()
-    elif name in ['-V', '--Vperipheries']:
-        if bool(re.search(listregex, value)):
+    elif name in ['-V', '--V-peripheries']:
+        if bool(re.search(list_regex, value)):
             Vp = eval(value)
         else:
             print("Error: expected a list of Floats or Ints for compartment volumes")
             sys.exit()
-    elif name in ['-Q', '--Qperipheries']:
-        if bool(re.search(listregex, value)):
+    elif name in ['-Q', '--Q-peripheries']:
+        if bool(re.search(list_regex, value)):
             Qp = eval(value)
         else:
             print("Error: expected a list of Floats or Ints for flux rates")
@@ -137,4 +144,10 @@ for name, value in options:
             sys.exit()
     elif name in ['-f', '--plot-folder']:
         plot = value
+    elif name in ['-T', '--title']:
+        title = value
 
+    run_model(model_type=m, clearance=CL, dose_rate=dose, dose_on=dose_on, dose_off=dose_off,
+              V_central=Vc, n_peripheries=N, V_peripheries=Vp, Q_peripheries=Qp,
+              drug_volume=V0, drug_absorption=absorption, run_time=run_time, time_step=t,
+              plot_folder=plot, title=title)
